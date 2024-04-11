@@ -36,12 +36,13 @@ void parser_check_advance(parser_T* parser, TokenType type)
 
 ast_T* parser_parse_statement(parser_T* parser)
 {
-	printf("%p\n", parser->current_token);
 	switch(parser->current_token->type)
 	{
 		case TOKEN_ID		: return parser_parse_id(parser);
 		case TOKEN_ILLEGAL	: parser_throw_error_illegal_token(parser->current_token);
 	}
+	
+	return init_ast(AST_NOOP);
 }
 
 ast_T* parser_parse_list_statements(parser_T* parser)
@@ -72,8 +73,9 @@ ast_T* parser_parse_expr(parser_T* parser)
 	{
 		case TOKEN_ID		: return parser_parse_id(parser);
 		case TOKEN_STRING	: return parser_parse_string(parser);
-		default				: parser_throw_error_illegal_token(parser->current_token);
 	}
+	
+	return init_ast(AST_NOOP);
 }
 
 ast_T* parser_parse_factor(parser_T* parser)
@@ -90,7 +92,6 @@ ast_T* parser_parse_func_call(parser_T* parser)
 {
 	ast_T* func_call = init_ast(AST_FUNC_CALL);
 	func_call->func_call_name = parser->prev_token->value;
-	printf("func name: %s\n", func_call->func_call_name);
 	parser_check_advance(parser, TOKEN_LPAREN);
 	
 	func_call->func_call_args = (struct AST_STRUCT**) malloc(sizeof(ast_T*));
@@ -107,11 +108,6 @@ ast_T* parser_parse_func_call(parser_T* parser)
 		func_call->func_call_args_size++;
 		func_call->func_call_args = (struct AST_STRUCT**) realloc(func_call->func_call_args, func_call->func_call_args_size * sizeof(struct AST_STRUCT*));
 		func_call->func_call_args[func_call->func_call_args_size-1] = ast_expr;
-	}
-	
-	for(int i = 0; i < func_call->func_call_args_size; i++)
-	{
-		printf("args %d: %s\n", i+1, func_call->func_call_args[i]->var_name_call);
 	}
 	
 	return func_call;

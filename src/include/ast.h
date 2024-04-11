@@ -9,7 +9,8 @@ typedef enum AST_TYPE
 	AST_FUNC_DEF,
 	AST_FUNC_CALL,
 	AST_STR,
-	AST_COMPOUND
+	AST_COMPOUND,
+	AST_NOOP
 } AstType;
 
 typedef struct AST_STRUCT
