@@ -39,7 +39,6 @@ ast_T* parser_parse_statement(parser_T* parser)
 	switch(parser->current_token->type)
 	{
 		case TOKEN_ID		: return parser_parse_id(parser);
-		case TOKEN_ILLEGAL	: parser_throw_error_illegal_token(parser->current_token);
 	}
 	
 	return init_ast(AST_NOOP);

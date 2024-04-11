@@ -1,0 +1,3 @@
+var name1 = "John";
+var name2 = "Marie";
+println(name1, name2);

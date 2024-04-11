@@ -11,7 +11,7 @@ ast_T* println_builtin_func(visitor_T* visitor, int argc, ast_T** argv)
 		ast_T* visited_ast = visitor_visit(visitor, argv[i]);
 		switch(visited_ast->type)
 		{
-			case AST_STR		: printf("%s\n", visited_ast->str_value); return init_ast(AST_NOOP);
+			case AST_STR		: printf("%s\n", visited_ast->str_value); break;
 			default				: printf("Unknown type %d, should be type %d\n", visited_ast->type, AST_STR); return init_ast(AST_NOOP);
 		}
 	}

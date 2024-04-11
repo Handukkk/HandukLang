@@ -22,6 +22,7 @@ ast_T* visitor_visit(visitor_T* visitor, ast_T* node)
 		case AST_FUNC_CALL	: return visitor_visit_func_call(visitor, node); break;
 		case AST_STR		: return visitor_visit_string(visitor, node); break;
 		case AST_COMPOUND	: return visitor_visit_compound(visitor, node); break;
+		case AST_NOOP		: return node; break;
 	}
 	
 	printf("Uncaught statement type '%d'\n", node->type);
